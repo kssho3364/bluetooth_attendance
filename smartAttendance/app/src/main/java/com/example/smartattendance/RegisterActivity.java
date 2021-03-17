@@ -1,7 +1,9 @@
 package com.example.smartattendance;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -46,7 +48,9 @@ public class RegisterActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sf.edit();
                 editor.putString("name",setMyName_edit.getText().toString());
                 editor.commit();
-                Toast.makeText(RegisterActivity.this,"안정적인 실행을 위해 앱을 다시 시작해주세요",Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this,"인증되었습니다.",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
                 finish();
             }
             else{
@@ -64,6 +68,8 @@ public class RegisterActivity extends AppCompatActivity {
                 code = snapshot.getValue().toString();
                 //코드가없을때 예외처리를 해주는게 좋을것같음
                 Toast.makeText(RegisterActivity.this,"코드를 입력해주세요!",Toast.LENGTH_SHORT).show();
+                pullRequest_bt.setVisibility(View.GONE);
+                request_bt.setVisibility(View.VISIBLE);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
