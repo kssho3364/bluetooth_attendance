@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        //데이터를 넣는 부분.
         mDatabase.child(mDate).child(name).child(kind).setValue(mTime)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

@@ -9,6 +9,7 @@
         android:id="@+id/setMyName_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="이름"
@@ -16,18 +17,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.236" />
+        app:layout_constraintTop_toBottomOf="@+id/pw_edit"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/insertCode_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="68dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="코드"
         app:layout_constraintEnd_toEndOf="@+id/setMyName_edit"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/setMyName_edit"
         app:layout_constraintTop_toBottomOf="@+id/setMyName_edit" />
 
@@ -52,4 +54,39 @@
         app:layout_constraintStart_toStartOf="@+id/insertCode_edit"
         app:layout_constraintTop_toBottomOf="@+id/insertCode_edit"
         tools:visibility="visible" />
+
+    <EditText
+        android:id="@+id/id_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="ID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/pw_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="PW"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_edit" />
+
+    <Button
+        android:id="@+id/overlap_bt"
+        android:layout_width="68dp"
+        android:layout_height="73dp"
+        android:text="중복확인"
+        app:layout_constraintBottom_toBottomOf="@+id/id_edit"
+        app:layout_constraintStart_toEndOf="@+id/id_edit"
+        app:layout_constraintTop_toTopOf="@+id/id_edit" />
 </androidx.constraintlayout.widget.ConstraintLayout>
