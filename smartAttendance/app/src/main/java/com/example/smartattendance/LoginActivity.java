@@ -81,33 +81,9 @@ public class LoginActivity extends AppCompatActivity {
         }
         // 테스트
         test_bt1.setOnClickListener(v -> {
-
-            //읽기 부분************************************************
-//            mDatabase.child("EMPLOYEES").addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot snapshot) {
-//                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                        DAOinfo daoinfo = dataSnapshot.getValue(DAOinfo.class);
-//                        Log.d("asdasdas",""+daoinfo.getPW());
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError error) {
-//
-//                }
-//            });
-                //데이터 넣기 부분
-//            int count = 0;
-//            while(true) {
-//                mDatabase.child("EMPLOYEES").child("Billy"+count).child("NAME").setValue("Billy"+count);
-//                mDatabase.child("EMPLOYEES").child("Billy"+count).child("PW").setValue("pw"+count);
-//                mDatabase.child("EMPLOYEES").child("Billy"+count).child("ID").setValue("id"+count);
-//                count++;
-//                if(count > 5){
-//                    break;
-//                }
-//            }
+            Intent intent = new Intent(getApplicationContext(),TestActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         //회원가입 페이지로 이동
