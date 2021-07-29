@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         // 테스트
         test_bt1.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(),TestActivity.class);
+            Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
             startActivity(intent);
             finish();
         });
@@ -105,14 +105,25 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("asd", "" + daoinfo.getID());
                         if(daoinfo.getID().equals(id)){
                             if(daoinfo.getPW().equals(pw)) {
-                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                if (daoinfo.getCOMP().equals("null")){
+                                    Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else{
+                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
                             }
                             else{
                                 Toast.makeText(LoginActivity.this, "비밀번호가 다릅니다.",Toast.LENGTH_SHORT).show();
                                 break;
                             }
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this, "일치하는 아이디가 없습니다.",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

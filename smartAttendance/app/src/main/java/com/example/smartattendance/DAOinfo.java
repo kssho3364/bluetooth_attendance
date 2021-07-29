@@ -3,6 +3,15 @@ package com.example.smartattendance;
 public class DAOinfo {
     private String NAME;
     private String ID;
+    private String COMP;
+
+    public String getCOMP() {
+        return COMP;
+    }
+
+    public void setCOMP(String COMP) {
+        this.COMP = COMP;
+    }
 
     public String getNAME() {
         return NAME;
