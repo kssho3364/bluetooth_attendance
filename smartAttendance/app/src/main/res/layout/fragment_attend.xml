@@ -6,21 +6,21 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/attend_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="85dp"
-        android:text="Button"
+        android:text="출근"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/workoff_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="81dp"
-        android:text="Button"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button"
+        android:text="퇴근"
+        app:layout_constraintBaseline_toBaselineOf="@+id/attend_bt"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

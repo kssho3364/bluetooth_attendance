@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         MY_NAME = sharedPreferences.getString("name","");
 
         // 실행시, 위치권한 설정, 이미 허용되어있으면 넘어감
+        // 권한을 거부할때 기능 넣어야함.....***************
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_RESULT);
 
         //블루투스 호환 기기인지 판별
@@ -109,11 +110,14 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
                                     startActivity(intent);
                                     finish();
+                                    break;
                                 }
                                 else{
-                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                    //메인액티비티로가야함
+                                    Intent intent = new Intent(getApplicationContext(),TestActivity.class);
                                     startActivity(intent);
                                     finish();
+                                    break;
                                 }
 
                             }
@@ -124,13 +128,14 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else{
                             Toast.makeText(LoginActivity.this, "일치하는 아이디가 없습니다.",Toast.LENGTH_SHORT).show();
+                            break;
                         }
                     }
                 }
 
                 @Override
                 public void onCancelled(DatabaseError error) {
-
+                    Toast.makeText(LoginActivity.this, "서버와 연결할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 }
 
 //            Intent intent = new Intent(getApplicationContext(),MainActivity.class);

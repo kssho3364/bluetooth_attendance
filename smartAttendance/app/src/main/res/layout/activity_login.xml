@@ -40,7 +40,7 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="PW"
+        android:text="admin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         android:layout_marginTop="300dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="ID"
+        android:text="admin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

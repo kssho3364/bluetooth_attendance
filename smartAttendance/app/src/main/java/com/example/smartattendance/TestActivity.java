@@ -1,13 +1,18 @@
 package com.example.smartattendance;
 
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -17,7 +22,6 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
 
         //바텀네비게이션 부분.
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
