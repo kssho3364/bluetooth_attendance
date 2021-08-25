@@ -22,12 +22,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,27 +64,46 @@ public class AttendFragment extends Fragment {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_attend, container, false);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        executor = ContextCompat.getMainExecutor(getActivity());
+
+
+        mDatabase.child("DEVICE_NAME").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                DEVICE_NAME = snapshot.getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         attend_bt = (Button) view.findViewById(R.id.attend_bt);
-
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-
-        biometricPrompt.authenticate(promptInfo);
+        workoff_bt = (Button) view.findViewById(R.id.workoff_bt);
 
         attend_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "aaaaaaaaa", Toast.LENGTH_SHORT).show();
-
-
+                checkAtt = ATTENDANCE_CODE;
+                setDevice();
             }
+        });
+        workoff_bt.setOnClickListener(v -> {
+            checkAtt = OFFWORK_CODE;
+            setDevice();
         });
 
 
         return view;
     }
+
+
+
     //파이어베이스로 데이터 전송
-    private void sendToFirebase(String name, String kind) {
+    private void sendToFirebase(String kind) {
 
         //현재 시간과 날짜
         long now = System.currentTimeMillis();
@@ -90,10 +113,13 @@ public class AttendFragment extends Fragment {
         SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm:ss");
         String mTime = mTimeFormat.format(date);
 
+        String myName = getArguments().getString("myName");
+        String myComp = getArguments().getString("myComp");
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //데이터를 넣는 부분.
-        mDatabase.child(mDate).child(name).child(kind).setValue(mTime)
+        mDatabase.child(myComp).child(myName).child(mDate).child(kind).setValue(mTime)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -129,9 +155,9 @@ public class AttendFragment extends Fragment {
                         Log.d("태그", "찾음");
                         //여기서 서버통신, 출근.퇴근 코드 쏘기
                         if (checkAtt == ATTENDANCE_CODE){
-//                            sendToFirebase(myName,ATTENDANCE);
+                            sendToFirebase(ATTENDANCE);
                         }else if(checkAtt == OFFWORK_CODE){
-//                            sendToFirebase(myName,OFFWORK);
+                            sendToFirebase(OFFWORK);
                         }
                     }
                 }
@@ -198,7 +224,7 @@ public class AttendFragment extends Fragment {
                 .setDeviceCredentialAllowed(false)
                 .build();
 
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         getActivity().registerReceiver(receiver, filter);
 
         filter.addAction(BluetoothDevice.ACTION_FOUND);

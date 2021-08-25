@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         // 테스트
         test_bt1.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
+            Intent intent = new Intent(getApplicationContext(),TestActivity.class);
             startActivity(intent);
             finish();
         });
@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(daoinfo.getID().equals(id)){
                             if(daoinfo.getPW().equals(pw)) {
                                 if (daoinfo.getCOMP().equals("null")){
+                                    //최초 로그인 or 등록된 회사가 없을때
                                     Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -114,7 +115,11 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 else{
                                     //메인액티비티로가야함
+                                    String myName = daoinfo.getNAME();
+                                    String myComp = daoinfo.getCOMP();
                                     Intent intent = new Intent(getApplicationContext(),TestActivity.class);
+                                    intent.putExtra("myName",myName);
+                                    intent.putExtra("myComp",myComp);
                                     startActivity(intent);
                                     finish();
                                     break;
