@@ -1,5 +1,6 @@
 package com.example.smartattendance;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     private String code = "";
+    private String isOverlap = "";
 
     private Button request_bt, overlap_bt;
     private EditText setMyName_edit, insertCode_edit, id_edit, pw_edit;
@@ -35,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        request_bt = findViewById(R.id.pullRequest_bt);
+        request_bt = findViewById(R.id.request_bt);
         setMyName_edit = findViewById(R.id.setMyName_edit);
         insertCode_edit = findViewById(R.id.insertCode_edit);
         overlap_bt = findViewById(R.id.overlap_bt);
@@ -49,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         // ID 중복확인
         overlap_bt.setOnClickListener(v -> {
             String ID = id_edit.getText().toString();
-            mDatabase.child("EMPLOYEES").addListenerForSingleValueEvent(new ValueEventListener() {
+            mDatabase.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     int count = 0;
@@ -71,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
                     else{
                         Toast.makeText(RegisterActivity.this, "사용할 수 있는 아이디입니다.", Toast.LENGTH_SHORT).show();
                         request_bt.setVisibility(View.VISIBLE);
+                        isOverlap = id_edit.getText().toString();
                         Log.d("asd","중복된 값 없음");
                     }
                 }
@@ -83,20 +86,26 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         request_bt.setOnClickListener(v -> {
-            String info[] = new String[3];
 
-            info[0] = id_edit.getText().toString();
-            info[1] = pw_edit.getText().toString();
-            info[2] = setMyName_edit.getText().toString();
-            mDatabase.child("EMPLOYEES").child(info[2]).child("ID").setValue(info[0]);
-            mDatabase.child("EMPLOYEES").child(info[2]).child("PW").setValue(info[1]);
-            mDatabase.child("EMPLOYEES").child(info[2]).child("NAME").setValue(info[2]);
-            mDatabase.child("EMPLOYEES").child(info[2]).child("COMP").setValue("null");
+            if (id_edit.getText().toString().equals(isOverlap)) {
+                String info[] = new String[3];
 
-            Toast.makeText(RegisterActivity.this,"회원가입 완료!",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-            startActivity(intent);
-            finish();
+                info[0] = id_edit.getText().toString();
+                info[1] = pw_edit.getText().toString();
+                info[2] = setMyName_edit.getText().toString();
+                mDatabase.child("User").child(info[2]).child("ID").setValue(info[0]);
+                mDatabase.child("User").child(info[2]).child("PW").setValue(info[1]);
+                mDatabase.child("User").child(info[2]).child("NAME").setValue(info[2]);
+                mDatabase.child("User").child(info[2]).child("COMP").setValue("null");
+
+                Toast.makeText(RegisterActivity.this, "회원가입 완료!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else{
+                Toast.makeText(RegisterActivity.this,"ID 중복체크를 해주세요",Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

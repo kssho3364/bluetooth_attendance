@@ -106,17 +106,21 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("asd", "" + daoinfo.getID());
                         if(daoinfo.getID().equals(id)){
                             if(daoinfo.getPW().equals(pw)) {
+
+                                String myName = daoinfo.getNAME();
+                                String myComp = daoinfo.getCOMP();
+
+
                                 if (daoinfo.getCOMP().equals("null")){
                                     //최초 로그인 or 등록된 회사가 없을때
                                     Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
+                                    intent.putExtra("myName",myName);
                                     startActivity(intent);
                                     finish();
                                     break;
                                 }
                                 else{
                                     //메인액티비티로가야함
-                                    String myName = daoinfo.getNAME();
-                                    String myComp = daoinfo.getCOMP();
                                     Intent intent = new Intent(getApplicationContext(),TestActivity.class);
                                     intent.putExtra("myName",myName);
                                     intent.putExtra("myComp",myComp);

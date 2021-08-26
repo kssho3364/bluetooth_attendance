@@ -1,5 +1,6 @@
 package com.example.smartattendance;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -22,7 +23,18 @@ public class ConfirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
 
+        Intent intent = getIntent();
+        String myName = intent.getStringExtra("myName");
+
+
         mDatebase = FirebaseDatabase.getInstance().getReference();
+
+
+
+
+
+
+
 
         
 

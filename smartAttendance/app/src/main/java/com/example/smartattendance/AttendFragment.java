@@ -119,7 +119,7 @@ public class AttendFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //데이터를 넣는 부분.
-        mDatabase.child(myComp).child(myName).child(mDate).child(kind).setValue(mTime)
+        mDatabase.child(myComp).child("Attend").child(myName).child(mDate).child(kind).setValue(mTime)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
