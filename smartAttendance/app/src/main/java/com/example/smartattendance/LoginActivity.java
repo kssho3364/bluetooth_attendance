@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         // 테스트
         test_bt1.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(),TestActivity.class);
+            Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
             startActivity(intent);
             finish();
         });

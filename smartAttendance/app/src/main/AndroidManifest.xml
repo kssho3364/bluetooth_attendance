@@ -29,6 +29,7 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".TestActivity"/>
         <activity android:name=".ConfirmActivity"/>
+        <activity android:name=".SelectCompActivity"/>
     </application>
 
 </manifest>
