@@ -27,7 +27,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
 
         Intent intent = getIntent();
-        String myName = intent.getStringExtra("myName");
+        String myID = intent.getStringExtra("myID");
         String myComp = intent.getStringExtra("myComp");
         String plzShowMeError = "ERROR";
 
@@ -37,7 +37,7 @@ public class TestActivity extends AppCompatActivity {
         Fragment searchFragment = new SearchFragment();
 
         Bundle userInfoBundle = new Bundle();
-        userInfoBundle.putString("myName",myName);
+        userInfoBundle.putString("myID",myID);
         userInfoBundle.putString("myComp",myComp);
 
         attendFragment.setArguments(userInfoBundle);

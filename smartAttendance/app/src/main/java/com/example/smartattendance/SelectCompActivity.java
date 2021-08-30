@@ -42,8 +42,7 @@ public class SelectCompActivity extends AppCompatActivity {
         search_bt = findViewById(R.id.search_bt);
         searchComp_et = findViewById(R.id.searchComp_et);
 
-        Intent intent = getIntent();
-        String myName = intent.getStringExtra("myName");
+        Intent getIntent = getIntent();
 
         mDatebase = FirebaseDatabase.getInstance().getReference();
 
@@ -106,6 +105,8 @@ public class SelectCompActivity extends AppCompatActivity {
                         //확인버튼
                         Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
                         intent.putExtra("selectCompName",data.get(position));
+                        intent.putExtra("myID",getIntent.getStringExtra("myID"));
+                        intent.putExtra("myComp",getIntent.getStringExtra("myComp"));
                         startActivity(intent);
                         finish();
                     }

@@ -113,18 +113,20 @@ public class AttendFragment extends Fragment {
         SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm:ss");
         String mTime = mTimeFormat.format(date);
 
-        String myName = getArguments().getString("myName");
+        String myID = getArguments().getString("myID");
         String myComp = getArguments().getString("myComp");
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //데이터를 넣는 부분.
-        mDatabase.child(myComp).child("Attend").child(myName).child(mDate).child(kind).setValue(mTime)
+        mDatabase.child("Company").child(myComp).child("Attend").child(myID).child(mDate).child(kind).setValue(mTime)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // 저장성공시
                         Toast.makeText(getActivity(), "" + kind + " 되었습니다.", Toast.LENGTH_SHORT).show();
+                        //간헐적으로toast 에러가뜸 오ㅐ그러는지 모르겟음.......
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

@@ -4,6 +4,7 @@ public class DAOinfo {
     private String NAME;
     private String ID;
     private String COMP;
+    private String PW;
 
     public String getCOMP() {
         return COMP;
@@ -37,14 +38,13 @@ public class DAOinfo {
         this.PW = PW;
     }
 
-    private String PW;
 
 
-
-    public DAOinfo(String id, String pw, String name){
+    public DAOinfo(String id, String pw, String name, String comp){
         this.ID = id;
         this.PW = pw;
         this.NAME = name;
+        this.COMP = comp;
     }
     public DAOinfo(){
 

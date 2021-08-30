@@ -26,9 +26,10 @@ import java.util.List;
 
 public class ConfirmActivity extends AppCompatActivity {
 
-    Button selectComp_bt, confirm_bt;
-    TextView showComp_tv;
-    DatabaseReference mDatabase;
+    private Button selectComp_bt, confirm_bt;
+    private TextView showComp_tv;
+    private DatabaseReference mDatabase;
+    private String myID, myComp, selectCompName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +37,10 @@ public class ConfirmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm);
 
         Intent intent = getIntent();
-        String selectCompName = intent.getStringExtra("selectCompName");
+        myID = intent.getStringExtra("myID");
+        myComp = intent.getStringExtra("myComp");
+        Log.d("aaaaaaaaaaaaa",""+myID);
+        selectCompName = intent.getStringExtra("selectCompName");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         selectComp_bt = findViewById(R.id.selectComp_bt);
@@ -47,6 +51,8 @@ public class ConfirmActivity extends AppCompatActivity {
 
         selectComp_bt.setOnClickListener(v ->{
             Intent intent1 = new Intent(getApplicationContext(),SelectCompActivity.class);
+            intent1.putExtra("myID",myID);
+            intent1.putExtra("myComp",myComp);
             startActivity(intent1);
             finish();
         });
@@ -56,8 +62,18 @@ public class ConfirmActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                         if (dataSnapshot.getKey().equals(showComp_tv.getText().toString())){
-                            Log.d("aaaaaa",""+showComp_tv.getText().toString());
-//                            mDatabase.child("Company").child()
+                            Log.d("aaaaaa",""+myID);
+                            mDatabase.child("User").
+                                    child(intent.getStringExtra("myID")).
+                                    child("COMP").
+                                    setValue(showComp_tv.getText().toString());
+                            // 데이터 전송 실패시 대처방안 마련해야함.
+                            // 액티비티 전환시 데이터 유지하는 방법도 마련해야함.. putExtra 넘많이씀.
+                            Intent intent2 = new Intent(getApplicationContext(),TestActivity.class);
+                            intent2.putExtra("myID",myID);
+                            intent2.putExtra("myComp",myComp);
+                            startActivity(intent2);
+                            finish();
                         }
                     }
                 }
@@ -67,5 +83,11 @@ public class ConfirmActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }

@@ -93,10 +93,10 @@ public class RegisterActivity extends AppCompatActivity {
                 info[0] = id_edit.getText().toString();
                 info[1] = pw_edit.getText().toString();
                 info[2] = setMyName_edit.getText().toString();
-                mDatabase.child("User").child(info[2]).child("ID").setValue(info[0]);
-                mDatabase.child("User").child(info[2]).child("PW").setValue(info[1]);
-                mDatabase.child("User").child(info[2]).child("NAME").setValue(info[2]);
-                mDatabase.child("User").child(info[2]).child("COMP").setValue("null");
+                mDatabase.child("User").child(info[0]).child("ID").setValue(info[0]);
+                mDatabase.child("User").child(info[0]).child("PW").setValue(info[1]);
+                mDatabase.child("User").child(info[0]).child("NAME").setValue(info[2]);
+                mDatabase.child("User").child(info[0]).child("COMP").setValue("null");
 
                 Toast.makeText(RegisterActivity.this, "회원가입 완료!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
