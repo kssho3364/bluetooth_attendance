@@ -1,22 +1,88 @@
 package com.example.smartattendance;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class SearchFragment extends Fragment {
+
+    private CalendarView searchAttend_cv;
+    private DatabaseReference mDatabase;
+    private String myComp;
+    private String myID;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
-
+        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_search, container, false);
         //출퇴근 검색기능 액티비티.
+
+        myComp = getArguments().getString("myComp");
+        myID = getArguments().getString("myID");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        searchAttend_cv = (CalendarView) view.findViewById(R.id.searchAttend_cv);
+
+        searchAttend_cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String mString = ""+year+(month+1)+dayOfMonth;
+                if (true){
+
+                }
+                Log.d("dddd","0"+(month+1));
+
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder.setMessage(year+"년"+month+"월"+dayOfMonth+"일\n검색하시겠습니까?");
+//                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        mDatabase.child("Company").child(myComp).child("Attend").child(myID).child(selectDay).addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                Log.d("what",""+snapshot.getKey());
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//
+//                            }
+//                        });
+//                    }
+//                });
+//                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+            }
+        });
+
+
+        return view;
     }
 }
 

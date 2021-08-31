@@ -68,6 +68,9 @@ public class AttendFragment extends Fragment {
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         executor = ContextCompat.getMainExecutor(getActivity());
 
+        attend_bt = (Button) view.findViewById(R.id.attend_bt);
+        workoff_bt = (Button) view.findViewById(R.id.workoff_bt);
+
 
         mDatabase.child("DEVICE_NAME").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -80,9 +83,6 @@ public class AttendFragment extends Fragment {
 
             }
         });
-
-        attend_bt = (Button) view.findViewById(R.id.attend_bt);
-        workoff_bt = (Button) view.findViewById(R.id.workoff_bt);
 
         attend_bt.setOnClickListener(new View.OnClickListener() {
             @Override
