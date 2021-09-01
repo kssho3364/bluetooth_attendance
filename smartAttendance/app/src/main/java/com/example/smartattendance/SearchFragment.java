@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,9 +64,13 @@ public class SearchFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Log.d("dddd",""+snapshot.getValue());
-                                String getTime = snapshot.getValue().toString();
-                                String splitTime[] = getTime.split(":");
-                                attend_tv.setText(splitTime[0]+"시 "+splitTime[1]+"분");
+                                try {
+                                    String getTime = snapshot.getValue().toString();
+                                    String splitTime[] = getTime.split(":");
+                                    attend_tv.setText(splitTime[0]+"시 "+splitTime[1]+"분");
+                                }catch (Exception E){
+                                    attend_tv.setText("정보 없음.");
+                                }
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
@@ -76,9 +81,13 @@ public class SearchFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Log.d("dddd",""+snapshot.getValue());
-                                String getTime = snapshot.getValue().toString();
-                                String splitTime[] = getTime.split(":");
-                                offWork_tv.setText(splitTime[0]+"시 "+splitTime[1]+"분");
+                                try {
+                                    String getTime = snapshot.getValue().toString();
+                                    String splitTime[] = getTime.split(":");
+                                    offWork_tv.setText(splitTime[0]+"시 "+splitTime[1]+"분");
+                                }catch (Exception e){
+                                    offWork_tv.setText("정보 없음.");
+                                }
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
