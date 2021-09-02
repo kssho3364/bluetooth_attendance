@@ -35,6 +35,7 @@ public class TestActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         Fragment attendFragment = new AttendFragment();
         Fragment searchFragment = new SearchFragment();
+        Fragment settingFragment = new SettingFragment();
 
         Bundle userInfoBundle = new Bundle();
         userInfoBundle.putString("myID",myID);
@@ -42,19 +43,23 @@ public class TestActivity extends AppCompatActivity {
 
         attendFragment.setArguments(userInfoBundle);
         searchFragment.setArguments(userInfoBundle);
+        settingFragment.setArguments(userInfoBundle);
 
         //첫 화면 설정.
         getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, attendFragment).commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull    MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.item_fragment1:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, attendFragment).commit();
                         break;
                     case R.id.item_fragment2:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, searchFragment).commit();
+                        break;
+                    case R.id.item_fragment3:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, settingFragment).commit();
                         break;
                 }
                 return true;

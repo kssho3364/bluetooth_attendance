@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +37,8 @@ public class SearchFragment extends Fragment {
     private DatabaseReference mDatabase;
     private String myComp, myID;
     private TextView attend_tv, offWork_tv;
+    private BottomNavigationView navigationView;
+    private FrameLayout searchFrameLayout;
 
     @Nullable
     @Override
@@ -40,6 +46,14 @@ public class SearchFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_search, container, false);
         //출퇴근 검색기능 액티비티.
+
+//        navigationView = (NavigationView)view.findViewById(R.id.navigationView);
+        searchFrameLayout = (FrameLayout)view.findViewById(R.id.search_frameLayout);
+
+//        Fragment fragment_simple_search_view = new SimpleSearchFragment();
+//        Fragment fragment_complex_search_view = new ComplexSearchFragment();
+//
+//        getChildFragmentManager().beginTransaction().add(R.id.search_frameLayout, fragment_simple_search_view).commit();
 
         myComp = getArguments().getString("myComp");
         myID = getArguments().getString("myID");
@@ -108,6 +122,31 @@ public class SearchFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        navigationView = (BottomNavigationView)view.findViewById(R.id.navigationView);
+
+        Fragment fragment_simple_search_view = new SimpleSearchFragment();
+        Fragment fragment_complex_search_view = new ComplexSearchFragment();
+
+        getChildFragmentManager().beginTransaction().add(R.id.search_frameLayout, fragment_simple_search_view).commit();
+
+        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    //되나?????
+                }
+                return false;
+            }
+        });
+
+
+
     }
 }
 

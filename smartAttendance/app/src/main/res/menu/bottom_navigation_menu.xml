@@ -11,5 +11,10 @@
         android:enabled="true"
         android:icon="@drawable/common_google_signin_btn_icon_disabled"
         android:title="Item" />
+    <item
+        android:id="@+id/item_fragment3"
+        android:enabled="true"
+        android:icon="@drawable/common_google_signin_btn_icon_disabled"
+        android:title="Item" />
 
 </menu>
