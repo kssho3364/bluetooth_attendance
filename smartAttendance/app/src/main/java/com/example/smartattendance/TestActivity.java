@@ -26,10 +26,9 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        Intent intent = getIntent();
-        String myID = intent.getStringExtra("myID");
-        String myComp = intent.getStringExtra("myComp");
-        String plzShowMeError = "ERROR";
+//        Intent intent = getIntent();
+//        String myID = intent.getStringExtra("myID");
+//        String myComp = intent.getStringExtra("myComp");
 
         //바텀네비게이션 부분.
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -37,13 +36,13 @@ public class TestActivity extends AppCompatActivity {
         Fragment searchFragment = new SearchFragment();
         Fragment settingFragment = new SettingFragment();
 
-        Bundle userInfoBundle = new Bundle();
-        userInfoBundle.putString("myID",myID);
-        userInfoBundle.putString("myComp",myComp);
+//        Bundle userInfoBundle = new Bundle();
+//        userInfoBundle.putString("myID",myID);
+//        userInfoBundle.putString("myComp",myComp);
 
-        attendFragment.setArguments(userInfoBundle);
-        searchFragment.setArguments(userInfoBundle);
-        settingFragment.setArguments(userInfoBundle);
+//        attendFragment.setArguments(userInfoBundle);
+//        searchFragment.setArguments(userInfoBundle);
+//        settingFragment.setArguments(userInfoBundle);
 
         //첫 화면 설정.
         getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, attendFragment).commit();

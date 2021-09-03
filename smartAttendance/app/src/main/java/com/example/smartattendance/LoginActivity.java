@@ -41,11 +41,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Log.d("상태","크리에이트");
-
 
         register_bt = findViewById(R.id.register_bt);
         login_bt = findViewById(R.id.login_bt);
@@ -108,22 +106,18 @@ public class LoginActivity extends AppCompatActivity {
                         snapshotSize++;
                         DAOinfo daoinfo = dataSnapshot.getValue(DAOinfo.class);
 
-                        Log.d("asd", "" + daoinfo.getID());
-
                         if(daoinfo.getID().equals(id)){
-                            Log.d("asd", "if탐?");
+                            //ID와 PW가 전부 일치할때.
                             if(daoinfo.getPW().equals(pw)) {
-
-                                String myName = daoinfo.getNAME();
-                                String myComp = daoinfo.getCOMP();
-                                String myID = daoinfo.getID();
-
+                                //Application을 이용한 전역변수 선언.
+                                ((UserInfoData)getApplication()).setMyID(daoinfo.getID());
+                                ((UserInfoData)getApplication()).setMyPW(daoinfo.getPW());
+                                ((UserInfoData)getApplication()).setMyComp(daoinfo.getCOMP());
+                                ((UserInfoData)getApplication()).setMyName(daoinfo.getNAME());
 
                                 if (daoinfo.getCOMP().equals("null")){
-                                    //최초 로그인  (등록된 회사가 없을때)
+                                    //최초 로그인  (등록된 회사가 없을때, 최초 회원가입시, 자동으로 회사이름은 null이 됨.)
                                     Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
-                                    intent.putExtra("myID",myID);
-                                    intent.putExtra("myComp",myComp);
                                     startActivity(intent);
                                     finish();
                                     break;
@@ -131,8 +125,6 @@ public class LoginActivity extends AppCompatActivity {
                                 else{
                                     //메인액티비티로가야함
                                     Intent intent = new Intent(getApplicationContext(),TestActivity.class);
-                                    intent.putExtra("myID",myID);
-                                    intent.putExtra("myComp",myComp);
                                     startActivity(intent);
                                     finish();
                                     break;
@@ -158,31 +150,6 @@ public class LoginActivity extends AppCompatActivity {
                 public void onCancelled(DatabaseError error) {
                     Toast.makeText(LoginActivity.this, "서버와 연결할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 }
-
-//            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//            startActivity(intent);
-//            finish();
-                // 파이어베이스 데이터에서 아이디 먼저 검색 후, 일치하는 아이디가 있으면 그 아이디에 저장된 비밀번호 조회 후 일치 검사.
-//            mDatabase.child("attend").addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot snapshot) {
-//                    Log.d("asdasdasdasdass","pppppppppppp"+snapshot.getValue());
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError error) {
-//                    Log.d("asdasdasdasdass","fail");
-//                }
-//            });
-
-
-
-            /*모두 일치했을 경우 메인액티비티로 이동.
-            if(true){
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-                finish();
-            }*/
             });
         });
     }

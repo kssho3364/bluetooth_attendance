@@ -71,13 +71,11 @@ public class AttendFragment extends Fragment {
         attend_bt = (Button) view.findViewById(R.id.attend_bt);
         workoff_bt = (Button) view.findViewById(R.id.workoff_bt);
 
-
         mDatabase.child("DEVICE_NAME").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 DEVICE_NAME = snapshot.getValue().toString();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -96,11 +94,8 @@ public class AttendFragment extends Fragment {
             setDevice();
         });
 
-
         return view;
     }
-
-
 
     //파이어베이스로 데이터 전송
     private void sendToFirebase(String kind) {
@@ -113,10 +108,10 @@ public class AttendFragment extends Fragment {
         SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm:ss");
         String mTime = mTimeFormat.format(date);
 
-        String myID = getArguments().getString("myID");
-        String myComp = getArguments().getString("myComp");
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        String myID = ((UserInfoData)getActivity().getApplication()).getMyID();
+        String myComp = ((UserInfoData)getActivity().getApplication()).getMyComp();
 
         //데이터를 넣는 부분.
         mDatabase.child("Company").child(myComp).child("Attend").child(myID).child(mDate).child(kind).setValue(mTime)

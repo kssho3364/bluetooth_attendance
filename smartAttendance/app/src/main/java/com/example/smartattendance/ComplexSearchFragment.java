@@ -14,6 +14,8 @@ public class ComplexSearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_complex_search_view,container,false);
+
+        // 20210903_자세히보기
         return view;
     }
 }

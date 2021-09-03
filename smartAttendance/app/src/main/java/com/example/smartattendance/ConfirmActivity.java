@@ -36,11 +36,14 @@ public class ConfirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
 
-        Intent intent = getIntent();
-        myID = intent.getStringExtra("myID");
-        myComp = intent.getStringExtra("myComp");
-        Log.d("aaaaaaaaaaaaa",""+myID);
-        selectCompName = intent.getStringExtra("selectCompName");
+        Intent getIntent = getIntent();
+//        myID = intent.getStringExtra("myID");
+//        myComp = intent.getStringExtra("myComp");
+//        Log.d("aaaaaaaaaaaaa",""+myID);
+
+        myID = ((UserInfoData)getApplication()).getMyID();
+
+        selectCompName = getIntent.getStringExtra("selectCompName");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         selectComp_bt = findViewById(R.id.selectComp_bt);
@@ -50,10 +53,8 @@ public class ConfirmActivity extends AppCompatActivity {
         showComp_tv.setText(selectCompName);
 
         selectComp_bt.setOnClickListener(v ->{
-            Intent intent1 = new Intent(getApplicationContext(),SelectCompActivity.class);
-            intent1.putExtra("myID",myID);
-            intent1.putExtra("myComp",myComp);
-            startActivity(intent1);
+            Intent intent = new Intent(getApplicationContext(),SelectCompActivity.class);
+            startActivity(intent);
             finish();
         });
         confirm_bt.setOnClickListener(v ->{
@@ -64,15 +65,12 @@ public class ConfirmActivity extends AppCompatActivity {
                         if (dataSnapshot.getKey().equals(showComp_tv.getText().toString())){
                             Log.d("aaaaaa",""+myID);
                             mDatabase.child("User").
-                                    child(intent.getStringExtra("myID")).
+                                    child(myID).
                                     child("COMP").
-                                    setValue(showComp_tv.getText().toString());
+                                    setValue(selectCompName);
                             // 데이터 전송 실패시 대처방안 마련해야함.
-                            // 액티비티 전환시 데이터 유지하는 방법도 마련해야함.. putExtra 넘많이씀.
-                            Intent intent2 = new Intent(getApplicationContext(),TestActivity.class);
-                            intent2.putExtra("myID",myID);
-                            intent2.putExtra("myComp",myComp);
-                            startActivity(intent2);
+                            Intent intent = new Intent(getApplicationContext(),TestActivity.class);
+                            startActivity(intent);
                             finish();
                         }
                     }
