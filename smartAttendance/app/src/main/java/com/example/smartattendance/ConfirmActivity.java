@@ -29,7 +29,7 @@ public class ConfirmActivity extends AppCompatActivity {
     private Button selectComp_bt, confirm_bt;
     private TextView showComp_tv;
     private DatabaseReference mDatabase;
-    private String myID, myComp, selectCompName;
+    private String key, myComp, selectCompName, myID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class ConfirmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm);
 
         Intent getIntent = getIntent();
-//        myID = intent.getStringExtra("myID");
+        key = getIntent.getStringExtra("key");
 //        myComp = intent.getStringExtra("myComp");
 //        Log.d("aaaaaaaaaaaaa",""+myID);
 

@@ -31,6 +31,8 @@
         <activity android:name=".TestActivity"/>
         <activity android:name=".ConfirmActivity"/>
         <activity android:name=".SelectCompActivity"/>
+        <activity android:name=".MyPageActivity"/>
+        <activity android:name=".ModifyUserDataActivity"/>
     </application>
 
 </manifest>
