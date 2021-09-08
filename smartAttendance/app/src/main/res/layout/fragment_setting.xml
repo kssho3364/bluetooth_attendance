@@ -17,7 +17,7 @@
             android:id="@+id/notice_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="공지사항" />
+            android:text="공지사항(미구현)" />
 
         <Button
             android:id="@+id/myPage_bt"
@@ -29,13 +29,13 @@
             android:id="@+id/settingComp_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="근무지 관리" />
+            android:text="근무지 관리(미구현)" />
 
         <Button
             android:id="@+id/setting_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="설정" />
+            android:text="설정(미구현)" />
 
         <Button
             android:id="@+id/logOut_bt"

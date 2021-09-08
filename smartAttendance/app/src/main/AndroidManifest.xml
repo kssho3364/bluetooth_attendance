@@ -33,6 +33,7 @@
         <activity android:name=".SelectCompActivity"/>
         <activity android:name=".MyPageActivity"/>
         <activity android:name=".ModifyUserDataActivity"/>
+        <activity android:name=".SettingCompActivity"/>
     </application>
 
 </manifest>
