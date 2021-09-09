@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
@@ -58,26 +59,37 @@ public class LoginActivity extends AppCompatActivity {
 
         //블루투스 호환기기인지 판별을 위한 어댑터.
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
         //파이어베이스 연동.
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        //내부저장소에 인증받은 이력이 있는지 검사(ID코드 혹은 이름을 서버에서 받아왔는지) 후 변수 저장
-        autoLogPreferences = getSharedPreferences("autoLogin",MODE_PRIVATE);
 
         // 실행시, 위치권한 설정, 이미 허용되어있으면 넘어감
         // 권한을 거부할때 기능 넣어야함.....***************
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_RESULT);
+
+        //오토로그인이 췍 되어있는지 확인
+        isAutoCheck();
 
         //블루투스 호환 기기인지 판별
         if (bluetoothAdapter == null) {
             Toast.makeText(this,"블루투스를 지원하지 않는 기기입니다,",Toast.LENGTH_SHORT).show();
             finish();
         }
+
         // 테스트
         test_bt1.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
             startActivity(intent);
             finish();
+        });
+
+        autoLogin_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!autoLogin_cb.isChecked()){
+                    autoLogPreferences.edit().clear().commit();
+                }
+            }
         });
 
         //회원가입 페이지로 이동
@@ -91,9 +103,8 @@ public class LoginActivity extends AppCompatActivity {
             doLogin(id_et.getText().toString(), pw_et.getText().toString());
         });
     }
-
     public void doLogin(String id, String pw) {
-        if (!id_et.getText().toString().equals(null) && !pw_et.getText().toString().equals(null)) {
+        if (!id_et.getText().toString().equals("") && !pw_et.getText().toString().equals("")) {
             mDatabase.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
@@ -106,12 +117,18 @@ public class LoginActivity extends AppCompatActivity {
                         if (daoinfo.getID().equals(id)) {
                             //ID와 PW가 전부 일치할때.
                             if (daoinfo.getPW().equals(pw)) {
+                                if (autoLogin_cb.isChecked()){
+                                    setAutoLogin();
+                                    setUserInfo(daoinfo);
+                                    Log.d("isauto",""+autoLogPreferences.getString("ID",""));
+                                }else{
+                                    setUserInfo(daoinfo);
+                                }
                                 //Application을 이용한 전역변수 선언.
-                                ((UserInfoData) getApplication()).setMyID(daoinfo.getID());
-                                ((UserInfoData) getApplication()).setMyPW(daoinfo.getPW());
-                                ((UserInfoData) getApplication()).setMyComp(daoinfo.getCOMP());
-                                ((UserInfoData) getApplication()).setMyName(daoinfo.getNAME());
-
+//                                ((UserInfoData) getApplication()).setMyID(daoinfo.getID());
+//                                ((UserInfoData) getApplication()).setMyPW(daoinfo.getPW());
+//                                ((UserInfoData) getApplication()).setMyComp(daoinfo.getCOMP());
+//                                ((UserInfoData) getApplication()).setMyName(daoinfo.getNAME());
                                 if (daoinfo.getCOMP().equals("null")) {
                                     //최초 로그인  (등록된 회사가 없을때, 최초 회원가입시, 자동으로 회사이름은 null이 됨.)
                                     Intent intent = new Intent(getApplicationContext(), ConfirmActivity.class);
@@ -149,13 +166,23 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this,"입력해라",Toast.LENGTH_SHORT).show();
         }
     }
+
     public void setAutoLogin(){
         SharedPreferences.Editor editor = autoLogPreferences.edit();
         editor.putString("ID",id_et.getText().toString());
         editor.putString("PW",pw_et.getText().toString());
+        editor.putBoolean("isCheck",autoLogin_cb.isChecked());
         editor.commit();
     }
-    public void isAutoLoginCheck(){
-        autoLogin_cb.isChecked();
+    public void setUserInfo(DAOinfo daoinfo){
+        ((UserInfoData) getApplication()).setMyID(daoinfo.getID());
+        ((UserInfoData) getApplication()).setMyPW(daoinfo.getPW());
+        ((UserInfoData) getApplication()).setMyComp(daoinfo.getCOMP());
+        ((UserInfoData) getApplication()).setMyName(daoinfo.getNAME());
+    }
+    public void isAutoCheck(){
+        if (autoLogPreferences.getBoolean("isCheck",false) == true){
+            doLogin(autoLogPreferences.getString("ID",""),autoLogPreferences.getString("PW",""));
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.smartattendance;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,8 @@ import androidx.fragment.app.Fragment;
 
 public class SettingFragment extends Fragment {
 
-    Button notice_bt, myPage_bt, settingComp_bt, setting_bt, logOut_bt;
+    private Button notice_bt, myPage_bt, settingComp_bt, setting_bt, logOut_bt;
+    private SharedPreferences autoLogPreferences;
 
     @Nullable
     @Override
@@ -26,7 +29,7 @@ public class SettingFragment extends Fragment {
         setting_bt = (Button) view.findViewById(R.id.setting_bt);
         logOut_bt = (Button) view.findViewById(R.id.logOut_bt);
 
-
+        autoLogPreferences = getActivity().getSharedPreferences("autoLogin", Context.MODE_PRIVATE);
 
         settingComp_bt.setOnClickListener(v->{
             Intent intent = new Intent(getActivity().getApplicationContext(), SettingCompActivity.class);
@@ -43,6 +46,8 @@ public class SettingFragment extends Fragment {
 
         //로그아웃, userinfodata에 있는정보를 초기화시키고 login페이지로 이동
         logOut_bt.setOnClickListener(v->{
+
+            autoLogPreferences.edit().clear().commit();
             ((UserInfoData)getActivity().getApplication()).setMyID(null);
             ((UserInfoData)getActivity().getApplication()).setMyPW(null);
             ((UserInfoData)getActivity().getApplication()).setMyComp(null);
